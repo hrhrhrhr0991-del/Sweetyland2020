@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>قلم طلایی | ابزار تولید محتوا</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap');
+
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #F0D080;
+    --gold-dark: #8B6914;
+    --cream: #FDF8F0;
+    --cream-dark: #F5EDD8;
+    --brown: #3D2B1F;
+    --brown-light: #6B4C35;
+    --rose: #C4687A;
+    --rose-light: #E8A0AD;
+    --teal: #3A7D7B;
+    --teal-light: #6BB5B3;
+    --surface: #FFFCF5;
+    --border: #E8D9B8;
+    --shadow: rgba(61,43,31,0.12);
+    --text: #2D1E14;
+    --text-muted: #7A6050;
+    --radius: 16px;
+    --radius-sm: 10px;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+
+  body {
+    font-family: 'Vazirmatn', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    min-height: 100vh;
+    direction: rtl;
+    overflow-x: hidden;
+  }
+
+  /* ===== HEADER ===== */
+  .app-header {
+    background: linear-gradient(135deg, var(--brown) 0%, #5C3D2E 50%, var(--brown-light) 100%);
+    padding: 18px 20px 22px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 4px 20px rgba(61,43,31,0.3);
+  }
+  .header-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .logo-area {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .logo-icon {
+    width: 42px; height: 42px;
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+    box-shadow: 0 2px 10px rgba(201,168,76,0.4);
+  }
+  .logo-text { color: white; }
+  .logo-text h1 { font-size: 18px; font-weight: 800; line-height: 1; }
+  .logo-text p { font-size: 10px; opacity: 0.7; margin-top: 2px; font-weight: 300; }
+  .header-badge {
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    color: var(--brown);
+    font-size: 10px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 20px;
+  }
+  .user-greeting {
+    margin-top: 12px;
+    padding: 10px 14px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 10px;
+    border: 1px solid rgba(201,168,76,0.3);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .user-greeting span { font-size: 12px; color: rgba(255,255,255,0.85); }
+  .user-greeting strong { color: var(--gold-light); }
+
+  /* ===== MAIN ===== */
+  .main { padding: 20px 16px 100px; max-width: 500px; margin: 0 auto; }
+
+  /* ===== SECTION TITLE ===== */
+  .section-label {
+    display: flex; align-items: center; gap: 8px;
+    margin-bottom: 10px; margin-top: 20px;
+  }
+  .section-label .dot {
+    width: 8px; height: 8px;
+    background: var(--gold);
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .section-label span {
+    font-size: 13px; font-weight: 700;
+    color: var(--brown-light);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  /* ===== CARD ===== */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px;
+    margin-bottom: 14px;
+    box-shadow: 0 2px 12px var(--shadow);
+  }
+
+  /* ===== TEXT INPUT ===== */
+  .text-input-wrapper { position: relative; }
+  .main-textarea {
+    width: 100%;
+    min-height: 130px;
+    padding: 14px;
+    font-family: 'Vazirmatn', sans-serif;
+    font-size: 14px;
+    color: var(--text);
+    background: var(--cream);
+    border: 2px solid var(--border);
+    border-radius: var(--radius-sm);
+    resize: vertical;
+    outline: none;
+    direction: rtl;
+    line-height: 1.7;
+    transition: border-color 0.2s;
+  }
+  .main-textarea:focus { border-color: var(--gold); }
+  .main-textarea::placeholder { color: #B0A090; }
+  .char-counter {
+    position: absolute;
+    bottom: 10px; left: 12px;
+    font-size: 10px;
+    color: var(--text-muted);
+    background: var(--surface);
+    padding: 2px 6px;
+    border-radius: 8px;
+  }
+  .char-counter.warn { color: var(--rose); }
+
+  /* ===== SMART SUGGESTION ===== */
+  .smart-tip {
+    display: none;
+    margin-top: 8px;
+    padding: 8px 12px;
+    background: linear-gradient(135deg, rgba(201,168,76,0.1), rgba(240,208,128,0.15));
+    border: 1px solid rgba(201,168,76,0.3);
+    border-radius: var(--radius-sm);
+    font-size: 12px;
+    color: var(--gold-dark);
+    align-items: center; gap: 6px;
+  }
+  .smart-tip.show { display: flex; }
+  .smart-tip .tip-icon { font-size: 14px; flex-shrink: 0; }
+
+  /* ===== PLATFORM CHIPS ===== */
+  .chips-row {
+    display: flex; flex-wrap: wrap; gap: 8px;
+  }
+  .chip {
+    padding: 7px 13px;
+    border-radius: 30px;
+    border: 1.5px solid var(--border);
+    background: var(--cream);
+    font-size: 12px; font-weight: 600;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex; align-items: center; gap: 5px;
+    user-select: none;
+  }
+  .chip:active { transform: scale(0.95); }
+  .chip.active {
+    background: linear-gradient(135deg, var(--brown), var(--brown-light));
+    color: white; border-color: var(--brown);
+    box-shadow: 0 3px 10px rgba(61,43,31,0.25);
+  }
+  .chip.gold.active {
+    background: linear-gradient(135deg, var(--gold-dark), var(--gold));
+    color: white; border-color: var(--gold);
+    box-shadow: 0 3px 10px rgba(201,168,76,0.35);
+  }
+  .chip.rose.active {
+    background: linear-gradient(135deg, #9C3E50, var(--rose));
+    color: white; border-color: var(--rose);
+  }
+  .chip.teal.active {
+    background: linear-gradient(135deg, #2A5D5B, var(--teal));
+    color: white; border-color: var(--teal);
+  }
+
+  /* ===== RANGE SLIDER ===== */
+  .slider-wrapper { padding: 4px 0; }
+  .slider-labels {
+    display: flex; justify-content: space-between;
+    margin-bottom: 6px;
+  }
+  .slider-labels span { font-size: 11px; color: var(--text-muted); font-weight: 600; }
+  .slider-labels .active-label { color: var(--gold-dark); font-weight: 800; }
+  input[type="range"] {
+    width: 100%; -webkit-appearance: none;
+    height: 6px; border-radius: 3px;
+    background: linear-gradient(to left, var(--border), var(--border));
+    outline: none; cursor: pointer;
+  }
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--gold-dark), var(--gold));
+    box-shadow: 0 2px 8px rgba(201,168,76,0.5);
+    cursor: pointer;
+    border: 2px solid white;
+  }
+  .length-display {
+    text-align: center;
+    margin-top: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--gold-dark);
+    padding: 6px 0;
+    background: linear-gradient(135deg, rgba(201,168,76,0.08), rgba(240,208,128,0.12));
+    border-radius: 8px;
+  }
+
+  /* ===== TOGGLE SWITCH ===== */
+  .toggle-row {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 4px 0;
+  }
+  .toggle-info { display: flex; align-items: center; gap: 8px; }
+  .toggle-info .ti-icon { font-size: 18px; }
+  .toggle-info .ti-text { font-size: 13px; font-weight: 600; color: var(--text); }
+  .toggle-info .ti-sub { font-size: 11px; color: var(--text-muted); }
+  .toggle-switch { position: relative; width: 48px; height: 26px; }
+  .toggle-switch input { opacity: 0; width: 0; height: 0; }
+  .toggle-slider {
+    position: absolute; inset: 0;
+    background: var(--border); border-radius: 13px;
+    cursor: pointer; transition: 0.25s;
+  }
+  .toggle-slider::before {
+    content: '';
+    position: absolute;
+    width: 20px; height: 20px;
+    left: 3px; top: 3px;
+    background: white; border-radius: 50%;
+    transition: 0.25s;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+  }
+  .toggle-switch input:checked + .toggle-slider {
+    background: linear-gradient(135deg, var(--gold-dark), var(--gold));
+  }
+  .toggle-switch input:checked + .toggle-slider::before { transform: translateX(22px); }
+
+  /* ===== HASHTAG COUNT ===== */
+  .hashtag-count-row {
+    display: flex; align-items: center; gap: 10px;
+    margin-top: 12px;
+  }
+  .count-btn {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: var(--cream-dark);
+    border: 1.5px solid var(--border);
+    font-size: 18px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--brown); font-weight: 700;
+    transition: all 0.15s;
+    flex-shrink: 0;
+  }
+  .count-btn:active { transform: scale(0.9); background: var(--gold-light); }
+  .count-display {
+    flex: 1; text-align: center;
+    font-size: 15px; font-weight: 800;
+    color: var(--gold-dark);
+  }
+  .count-track {
+    flex: 2;
+    height: 4px;
+    background: var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .count-fill {
+    height: 100%;
+    background: linear-gradient(to right, var(--gold-dark), var(--gold-light));
+    border-radius: 2px;
+    transition: width 0.2s;
+  }
+
+  /* ===== GENERATE BUTTON ===== */
+  .generate-btn {
+    width: 100%;
+    padding: 18px;
+    background: linear-gradient(135deg, var(--brown) 0%, #5C3D2E 40%, var(--brown-light) 100%);
+    color: white;
+    border: none;
+    border-radius: var(--radius);
+    font-family: 'Vazirmatn', sans-serif;
+    font-size: 16px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.25s;
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    box-shadow: 0 6px 25px rgba(61,43,31,0.35);
+    position: relative;
+    overflow: hidden;
+    margin-top: 6px;
+  }
+  .generate-btn::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 60%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+    transition: left 0.5s;
+  }
+  .generate-btn:hover::before { left: 150%; }
+  .generate-btn:active { transform: scale(0.97); }
+  .generate-btn .btn-icon { font-size: 20px; }
+  .generate-btn .gold-bar {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--gold-dark), var(--gold-light), var(--gold-dark));
+  }
+  .generate-btn:disabled {
+    opacity: 0.6; cursor: not-allowed;
+  }
+  .generate-btn:disabled:active { transform: none; }
+
+  /* ===== LOADING ===== */
+  .loading-overlay {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(61,43,31,0.7);
+    backdrop-filter: blur(4px);
+    z-index: 200;
+    align-items: center; justify-content: center;
+    flex-direction: column; gap: 16px;
+  }
+  .loading-overlay.show { display: flex; }
+  .loading-card {
+    background: white;
+    border-radius: 20px;
+    padding: 32px 28px;
+    text-align: center;
+    max-width: 280px; width: 90%;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  }
+  .loading-dots { display: flex; justify-content: center; gap: 8px; margin-bottom: 16px; }
+  .loading-dot {
+    width: 10px; height: 10px;
+    background: var(--gold);
+    border-radius: 50%;
+    animation: bounce 1.2s infinite;
+  }
+  .loading-dot:nth-child(2) { animation-delay: 0.2s; background: var(--brown-light); }
+  .loading-dot:nth-child(3) { animation-delay: 0.4s; background: var(--rose); }
+  @keyframes bounce {
+    0%,80%,100% { transform: translateY(0); }
+    40% { transform: translateY(-12px); }
+  }
+  .loading-card p { font-size: 14px; color: var(--text-muted); font-weight: 600; }
+  .loading-card strong { display: block; font-size: 16px; color: var(--brown); margin-bottom: 4px; }
+
+  /* ===== RESULT CARD ===== */
+  .result-section { display: none; margin-top: 20px; }
+  .result-section.show { display: block; }
+  .result-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 12px;
+  }
+  .result-header h3 { font-size: 16px; font-weight: 800; color: var(--brown); }
+  .result-platform-badge {
+    display: flex; align-items: center; gap: 5px;
+    background: linear-gradient(135deg, var(--gold-dark), var(--gold));
+    color: white; padding: 4px 10px;
+    border-radius: 20px; font-size: 11px; font-weight: 700;
+  }
+  .result-content {
+    background: white;
+    border: 2px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 16px;
+    font-size: 14px; line-height: 1.9;
+    color: var(--text);
+    direction: rtl; text-align: right;
+    white-space: pre-wrap;
+    word-break: break-word;
+    min-height: 100px;
+    position: relative;
+  }
+  .result-content .hashtags { color: var(--teal); font-weight: 600; margin-top: 12px; display: block; }
+  .result-actions {
+    display: flex; gap: 8px; margin-top: 10px;
+  }
+  .action-btn {
+    flex: 1; padding: 11px 8px;
+    border-radius: var(--radius-sm);
+    border: 1.5px solid var(--border);
+    background: var(--cream);
+    font-family: 'Vazirmatn', sans-serif;
+    font-size: 12px; font-weight: 700;
+    color: var(--brown);
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex; align-items: center; justify-content: center; gap: 5px;
+  }
+  .action-btn:active { transform: scale(0.95); }
+  .action-btn.primary {
+    background: linear-gradient(135deg, var(--teal), var(--teal-light));
+    color: white; border-color: var(--teal);
+  }
+  .action-btn.copy-done { background: linear-gradient(135deg, #2D7A4F, #4CAF80); color: white; }
+
+  /* ===== BOTTOM NAV ===== */
+  .bottom-nav {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    background: white;
+    border-top: 1px solid var(--border);
+    display: flex;
+    box-shadow: 0 -4px 20px rgba(61,43,31,0.1);
+    z-index: 100;
+    max-width: 500px; margin: 0 auto;
+  }
+  .nav-item {
+    flex: 1;
+    padding: 10px 4px;
+    display: flex; flex-direction: column; align-items: center; gap: 3px;
+    cursor: pointer; color: var(--text-muted);
+    font-size: 10px; font-weight: 600;
+    transition: color 0.2s;
+    border: none; background: none;
+    font-family: 'Vazirmatn', sans-serif;
+  }
+  .nav-item .nav-icon { font-size: 20px; }
+  .nav-item.active { color: var(--gold-dark); }
+  .nav-item:nth-child(3) {
+    background: linear-gradient(135deg, var(--brown), var(--brown-light));
+    color: white; border-radius: 20px 20px 0 0;
+    margin: 0 4px;
+  }
+  .nav-item:nth-child(3).active { color: var(--gold-light); }
+
+  /* ===== DIVIDER ===== */
+  .divider {
+    height: 1px; background: var(--border);
+    margin: 8px 0;
+  }
+
+  /* ===== EMOJI STRIP ===== */
+  .emoji-strip {
+    display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px;
+  }
+  .emoji-btn {
+    padding: 5px 9px;
+    background: var(--cream-dark);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer; font-size: 14px;
+    transition: all 0.15s;
+  }
+  .emoji-btn:active { transform: scale(0.9); background: var(--gold-light); }
+  .emoji-btn.selected {
+    background: linear-gradient(135deg, var(--gold-dark), var(--gold));
+    border-color: var(--gold);
+  }
+
+  /* ===== SEO TOGGLE ===== */
+  .seo-badge {
+    display: inline-flex; align-items: center; gap: 4px;
+    background: linear-gradient(135deg, #2D5A8E, #4A90D9);
+    color: white; font-size: 10px; font-weight: 700;
+    padding: 3px 8px; border-radius: 6px;
+    vertical-align: middle; margin-right: 6px;
+  }
+
+  /* ===== SCROLLBAR ===== */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--cream); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+  /* ===== FADE ANIMATION ===== */
+  @keyframes fadeUp {
+    from { opacity:0; transform:translateY(16px); }
+    to { opacity:1; transform:translateY(0); }
+  }
+  .fade-up { animation: fadeUp 0.4s ease forwards; }
+
+  /* responsive fix */
+  @media (min-width:500px) {
+    .bottom-nav { left: 50%; transform: translateX(-50%); width: 500px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="app-header">
+  <div class="header-top">
+    <div class="logo-area">
+      <div class="logo-icon">✍️</div>
+      <div class="logo-text">
+        <h1>قلم طلایی</h1>
+        <p>ابزار هوشمند تولید محتوا</p>
+      </div>
+    </div>
+    <div class="header-badge">PRO ✨</div>
+  </div>
+  <div class="user-greeting">
+    <span>🌸</span>
+    <span>سلام <strong>خانم کیک‌پز عزیز</strong> — آماده‌ی محتوای امروزید؟</span>
+  </div>
+</header>
+
+<!-- LOADING -->
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="loading-card">
+    <div class="loading-dots">
+      <div class="loading-dot"></div>
+      <div class="loading-dot"></div>
+      <div class="loading-dot"></div>
+    </div>
+    <strong id="loadingTitle">در حال ساخت محتوا...</strong>
+    <p id="loadingDesc">هوش مصنوعی داره متن شما رو بهینه می‌کنه</p>
+  </div>
+</div>
+
+<!-- MAIN -->
+<main class="main">
+
+  <!-- INPUT CARD -->
+  <div class="section-label">
+    <div class="dot"></div>
+    <span>متن اولیه شما</span>
+  </div>
+  <div class="card">
+    <div class="text-input-wrapper">
+      <textarea class="main-textarea" id="userText" placeholder="ایده، متن خام یا موضوعت رو اینجا بنویس...&#10;مثلاً: کوکی شکلاتی جدیدم خیلی خوشمزه شد!" maxlength="2000" oninput="onTextChange(this)"></textarea>
+      <div class="char-counter" id="charCount">۰ / ۲۰۰۰</div>
+    </div>
+    <div class="smart-tip" id="smartTip">
+      <span class="tip-icon">💡</span>
+      <span id="smartTipText"></span>
+    </div>
+  </div>
+
+  <!-- PLATFORM -->
+  <div class="section-label">
+    <div class="dot"></div>
+    <span>پلتفرم انتشار</span>
+  </div>
+  <div class="card">
+    <div class="chips-row" id="platformChips">
+      <div class="chip teal active" data-val="bale" onclick="selectChip(this,'platform')">📱 بله</div>
+      <div class="chip" data-val="eitaa" onclick="selectChip(this,'platform')">💬 ایتا</div>
+      <div class="chip rose" data-val="insta_story" onclick="selectChip(this,'platform')">📸 اینستا استوری</div>
+      <div class="chip rose" data-val="insta_caption" onclick="selectChip(this,'platform')">🖼️ کپشن اینستا</div>
+      <div class="chip gold" data-val="website" onclick="selectChip(this,'platform')">🌐 سایت</div>
+      <div class="chip gold" data-val="channel" onclick="selectChip(this,'platform')">📢 کانال</div>
+    </div>
+  </div>
+
+  <!-- TONE -->
+  <div class="section-label">
+    <div class="dot"></div>
+    <span>لحن محتوا</span>
+  </div>
+  <div class="card">
+    <div class="chips-row" id="toneChips">
+      <div class="chip active" data-val="friendly" onclick="selectChip(this,'tone')">🤗 صمیمی</div>
+      <div class="chip" data-val="serious" onclick="selectChip(this,'tone')">💼 جدی</div>
+      <div class="chip" data-val="elegant" onclick="selectChip(this,'tone')">✨ شیک</div>
+      <div class="chip" data-val="funny" onclick="selectChip(this,'tone')">😄 شوخ</div>
+      <div class="chip" data-val="motivational" onclick="selectChip(this,'tone')">🔥 انگیزشی</div>
+      <div class="chip" data-val="storytelling" onclick="selectChip(this,'tone')">📖 روایی</div>
+    </div>
+  </div>
+
+  <!-- LENGTH -->
+  <div class="section-label">
+    <div class="dot"></div>
+    <span>طول محتوا</span>
+  </div>
+  <div class="card">
+    <div class="slider-wrapper">
+      <div class="slider-labels">
+        <span>کوتاه</span>
+        <span class="active-label" id="lengthLabel">متوسط ⭐ پیشنهادی</span>
+        <span>بلند</span>
+      </div>
+      <input type="range" min="1" max="3" value="2" id="lengthSlider" oninput="onLengthChange(this.value)">
+    </div>
+    <div class="length-display" id="lengthDisplay">📝 متوسط — بهترین تعادل برای کانال شما</div>
+  </div>
+
+  <!-- CONTENT TYPE -->
+  <div class="section-label">
+    <div class="dot"></div>
+    <span>نوع پیام</span>
+  </div>
+  <div class="card">
+    <div class="chips-row" id="typeChips">
+      <div class="chip active" data-val="post" onclick="selectChip(this,'type')">✍️ پست معمولی</div>
+      <div class="chip" data-val="recipe" onclick="selectChip(this,'type')">🎂 آموزش/دستور</div>
+      <div class="chip" data-val="promo" onclick="selectChip(this,'type')">🛒 تبلیغاتی</div>
+      <div class="chip" data-val="personal" onclick="selectChip(this,'type')">💬 شخصی</div>
+      <div class="chip" data-val="tip" onclick="selectChip(this,'type')">💡 نکته/ترفند</div>
+      <div class="chip" data-val="qa" onclick="selectChip(this,'type')">❓ سوال/نظرخواهی</div>
+    </div>
+  </div>
+
+  <!-- EMOJI -->
+  <div class="section-label">
+    <div class="dot"></div>
+    <span>ایموجی‌های پیشنهادی اضافه شود؟</span>
+  </div>
+  <div class="card">
+    <div class="toggle-row">
+      <div class="toggle-info">
+        <span class="ti-icon">😍</span>
+        <div>
+          <div class="ti-text">ایموجی داخل متن</div>
+          <div class="ti-sub">جذابیت بیشتر برای کانال</div>
+        </div>
+      </div>
+      <label class="toggle-switch">
+        <input type="checkbox" id="emojiToggle" checked>
+        <span class="toggle-slider"></span>
+      </label>
+    </div>
+  </div>
+
+  <!-- HASHTAG -->
+  <div class="section-label">
+    <div class="dot"></div>
+    <span>هشتگ</span>
+  </div>
+  <div class="card">
+    <div class="toggle-row">
+      <div class="toggle-info">
+        <span class="ti-icon">#️⃣</span>
+        <div>
+          <div class="ti-text">اضافه کردن هشتگ</div>
+          <div class="ti-sub">هشتگ‌های مرتبط با موضوع</div>
+        </div>
+      </div>
+      <label class="toggle-switch">
+        <input type="checkbox" id="hashtagToggle" checked onchange="toggleHashtag(this.checked)">
+        <span class="toggle-slider"></span>
+      </label>
+    </div>
+    <div id="hashtagOptions" style="margin-top:12px;">
+      <div class="toggle-info" style="margin-bottom:8px;">
+        <span class="ti-sub">تعداد هشتگ:</span>
+      </div>
+      <div class="hashtag-count-row">
+        <button class="count-btn" onclick="changeHashCount(-1)">−</button>
+        <div class="count-track"><div class="count-fill" id="countFill" style="width:40%"></div></div>
+        <div class="count-display"><span id="hashCountNum">5</span> هشتگ</div>
+        <button class="count-btn" onclick="changeHashCount(1)">+</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEO -->
+  <div class="section-label">
+    <div class="dot"></div>
+    <span>بهینه‌سازی</span>
+  </div>
+  <div class="card">
+    <div class="toggle-row">
+      <div class="toggle-info">
+        <span class="ti-icon">🔍</span>
+        <div>
+          <div class="ti-text">سئو <span class="seo-badge">SEO</span></div>
+          <div class="ti-sub">کلیدواژه‌های مناسب در متن</div>
+        </div>
+      </div>
+      <label class="toggle-switch">
+        <input type="checkbox" id="seoToggle" checked>
+        <span class="toggle-slider"></span>
+      </label>
+    </div>
+    <div class="divider"></div>
+    <div class="toggle-row" style="margin-top:4px;">
+      <div class="toggle-info">
+        <span class="ti-icon">📣</span>
+        <div>
+          <div class="ti-text">دعوت به اقدام (CTA)</div>
+          <div class="ti-sub">مثل: نظرت رو بنویس، ذخیره کن</div>
+        </div>
+      </div>
+      <label class="toggle-switch">
+        <input type="checkbox" id="ctaToggle" checked>
+        <span class="toggle-slider"></span>
+      </label>
+    </div>
+  </div>
+
+  <!-- GENERATE -->
+  <button class="generate-btn" id="generateBtn" onclick="generateContent()">
+    <span class="btn-icon">✨</span>
+    <span>ساخت محتوا</span>
+    <div class="gold-bar"></div>
+  </button>
+
+  <!-- RESULT -->
+  <div class="result-section" id="resultSection">
+    <div class="section-label">
+      <div class="dot"></div>
+      <span>محتوای آماده شما</span>
+    </div>
+    <div class="card fade-up">
+      <div class="result-header">
+        <h3>📋 محتوای تولید شده</h3>
+        <div class="result-platform-badge" id="resultBadge">📱 بله</div>
+      </div>
+      <div class="result-content" id="resultContent"></div>
+      <div class="result-actions">
+        <button class="action-btn primary" onclick="copyResult()">📋 کپی کامل</button>
+        <button class="action-btn" onclick="generateContent()">🔄 تولید مجدد</button>
+        <button class="action-btn" onclick="clearAll()">🗑️ پاک کردن</button>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav">
+  <button class="nav-item active">
+    <span class="nav-icon">✍️</span>
+    <span>ساخت</span>
+  </button>
+  <button class="nav-item" onclick="showTips()">
+    <span class="nav-icon">💡</span>
+    <span>نکات</span>
+  </button>
+  <button class="nav-item active" onclick="generateContent()">
+    <span class="nav-icon">⚡</span>
+    <span>تولید</span>
+  </button>
+  <button class="nav-item" onclick="showHistory()">
+    <span class="nav-icon">📂</span>
+    <span>تاریخچه</span>
+  </button>
+  <button class="nav-item" onclick="showProfile()">
+    <span class="nav-icon">👤</span>
+    <span>من</span>
+  </button>
+</nav>
+
+<script>
+// ====== STATE ======
+let state = {
+  platform: 'bale',
+  tone: 'friendly',
+  type: 'post',
+  length: 2,
+  hashCount: 5,
+  hashtagOn: true,
+  history: []
+};
+
+const platformNames = {
+  bale: '📱 بله', eitaa: '💬 ایتا',
+  insta_story: '📸 استوری اینستاگرام', insta_caption: '🖼️ کپشن اینستاگرام',
+  website: '🌐 سایت', channel: '📢 کانال'
+};
+
+const lengthData = [
+  null,
+  { label: '📝 کوتاه — ایده‌آل برای استوری', range: '60 تا 120 کلمه', hint: 'کوتاه' },
+  { label: '📝 متوسط — بهترین تعادل برای کانال شما', range: '150 تا 250 کلمه', hint: 'متوسط' },
+  { label: '📝 بلند — مناسب آموزش و دستور پخت', range: '300 تا 450 کلمه', hint: 'بلند' }
+];
+
+// ====== CHAR COUNT ======
+function toPersianNum(n){ return String(n).replace(/\d/g, d=>'۰۱۲۳۴۵۶۷۸۹'[d]); }
+
+function onTextChange(el){
+  const len = el.value.length;
+  const el2 = document.getElementById('charCount');
+  el2.textContent = toPersianNum(len) + ' / ۲۰۰۰';
+  el2.className = 'char-counter' + (len > 1800 ? ' warn' : '');
+  smartSuggest(el.value);
+}
+
+function smartSuggest(text){
+  const tip = document.getElementById('smartTip');
+  const tipText = document.getElementById('smartTipText');
+  if(text.length < 10){ tip.classList.remove('show'); return; }
+
+  let msg = '';
+  if(text.length < 60) msg = 'متن کوتاهه — پیشنهاد: طول کوتاه یا استوری انتخاب کنید';
+  else if(text.length < 200) msg = 'طول متوسط — این سایز برای کانال بله عالیه! ⭐';
+  else if(text.length > 500) msg = 'متن بلند — پیشنهاد: لحن آموزشی یا روایی انتخاب کنید';
+  else msg = 'محتوا آماده‌ست — بزنید ساخت! ✨';
+
+  tipText.textContent = msg;
+  tip.classList.add('show');
+}
+
+// ====== CHIPS ======
+function selectChip(el, group){
+  const parent = document.getElementById(group + 'Chips');
+  parent.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  state[group] = el.dataset.val;
+}
+
+// ====== LENGTH ======
+function onLengthChange(v){
+  state.length = parseInt(v);
+  const d = lengthData[state.length];
+  document.getElementById('lengthDisplay').textContent = d.label;
+  const lbl = document.getElementById('lengthLabel');
+  if(state.length === 2) lbl.textContent = 'متوسط ⭐ پیشنهادی';
+  else if(state.length === 1) lbl.textContent = 'کوتاه';
+  else lbl.textContent = 'بلند';
+}
+
+// ====== HASHTAG ======
+function toggleHashtag(on){
+  state.hashtagOn = on;
+  document.getElementById('hashtagOptions').style.display = on ? 'block' : 'none';
+}
+
+function changeHashCount(delta){
+  state.hashCount = Math.min(15, Math.max(1, state.hashCount + delta));
+  document.getElementById('hashCountNum').textContent = state.hashCount;
+  document.getElementById('countFill').style.width = (state.hashCount / 15 * 100) + '%';
+}
+
+// ====== GENERATE ======
+async function generateContent(){
+  const text = document.getElementById('userText').value.trim();
+  if(!text){ alert('لطفاً ابتدا متن خود را بنویسید 🌸'); return; }
+
+  const btn = document.getElementById('generateBtn');
+  btn.disabled = true;
+  document.getElementById('loadingOverlay').classList.add('show');
+
+  const steps = [
+    ['در حال تحلیل متن...','هوش مصنوعی موضوع رو شناسایی می‌کنه'],
+    ['بهینه‌سازی سئو...','کلیدواژه‌های مناسب پیدا میشه'],
+    ['اضافه کردن هشتگ...','هشتگ‌های ترند انتخاب میشه'],
+    ['نهایی‌سازی...','لمس آخر رو میزنیم!']
+  ];
+  let si = 0;
+  const iv = setInterval(()=>{
+    if(si < steps.length){
+      document.getElementById('loadingTitle').textContent = steps[si][0];
+      document.getElementById('loadingDesc').textContent = steps[si][1];
+      si++;
+    }
+  }, 700);
+
+  const toneMap = {
+    friendly:'صمیمی و گرم و دوستانه (مثل حرف زدن با دوست)',
+    serious:'رسمی و حرفه‌ای',
+    elegant:'شیک و متفاوت، زبان لطیف',
+    funny:'شوخ‌طبع و سرگرم‌کننده با جوک خفیف',
+    motivational:'انگیزشی و پرانرژی',
+    storytelling:'روایی و داستانی'
+  };
+  const typeMap = {
+    post:'پست معمولی اطلاع‌رسانی',
+    recipe:'آموزش و دستور پخت (با مراحل)',
+    promo:'تبلیغاتی برای معرفی محصول/دوره',
+    personal:'روایت شخصی و تجربه',
+    tip:'نکته کاربردی و ترفند',
+    qa:'سوال از مخاطب برای گرفتن نظر'
+  };
+  const lenMap = {1:'۶۰ تا ۱۲۰ کلمه', 2:'۱۵۰ تا ۲۵۰ کلمه', 3:'۳۰۰ تا ۴۵۰ کلمه'};
+  const useEmoji = document.getElementById('emojiToggle').checked;
+  const useSeo = document.getElementById('seoToggle').checked;
+  const useCta = document.getElementById('ctaToggle').checked;
+  const useHash = document.getElementById('hashtagToggle').checked;
+  const hashCount = state.hashCount;
+
+  const prompt = `تو یک متخصص حرفه‌ای تولید محتوا در حوزه شیرینی‌پزی، کیک و آشپزی هستی.
+
+اطلاعات نویسنده:
+- خانم متاهل ۴۴ ساله با ۳ فرزند
+- مدرن و مذهبی
+- سال‌ها دوره کیک‌پزی با بهترین شف‌های دنیا
+- پیج اینستاگرام از سال ۲۰۲۰، هم‌اکنون تمرکز اصلی روی کانال بله
+
+متن اولیه کاربر:
+«${text}»
+
+پارامترها:
+- پلتفرم: ${platformNames[state.platform]}
+- لحن: ${toneMap[state.tone]}
+- نوع محتوا: ${typeMap[state.type]}
+- طول: ${lenMap[state.length]}
+- ایموجی: ${useEmoji ? 'بله، داخل متن ایموجی‌های مرتبط با شیرینی و کیک اضافه کن' : 'بدون ایموجی'}
+- سئو: ${useSeo ? 'بله، کلیدواژه‌های مرتبط را طبیعی داخل متن بگنجان' : 'خیر'}
+- دعوت به اقدام: ${useCta ? 'بله، آخر متن یک CTA مرتبط و جذاب اضافه کن' : 'خیر'}
+- هشتگ: ${useHash ? `بله، دقیقاً ${hashCount} هشتگ مرتبط فارسی-انگلیسی در انتهای متن` : 'بدون هشتگ'}
+
+دستورالعمل‌ها:
+۱. متن را مستقیماً بنویس، بدون توضیح اضافه
+۲. سبک نوشتار باید متناسب با ${platformNames[state.platform]} باشد
+۳. اگر پلتفرم استوری اینستاگرام است، متن بسیار کوتاه و ضربه‌ای باشد
+۴. اگر نوع محتوا آموزشی است، مراحل را شماره‌گذاری کن
+۵. هشتگ‌ها را با # در آخر و جدا از متن اصلی بنویس
+۶. فقط متن نهایی آماده برای انتشار را بنویس
+
+متن نهایی:`;
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({
+        model:'claude-sonnet-4-6',
+        max_tokens:1000,
+        messages:[{role:'user',content:prompt}]
+      })
+    });
+    const data = await res.json();
+    clearInterval(iv);
+    document.getElementById('loadingOverlay').classList.remove('show');
+    btn.disabled = false;
+
+    if(data.content && data.content[0]){
+      const result = data.content[0].text;
+      showResult(result);
+      state.history.unshift({ text: result, platform: state.platform, date: new Date() });
+    } else {
+      alert('خطایی رخ داد. دوباره امتحان کنید.');
+    }
+  } catch(e){
+    clearInterval(iv);
+    document.getElementById('loadingOverlay').classList.remove('show');
+    btn.disabled = false;
+    alert('خطا در اتصال به سرور. اینترنت را بررسی کنید.');
+  }
+}
+
+function showResult(text){
+  const sec = document.getElementById('resultSection');
+  const content = document.getElementById('resultContent');
+  document.getElementById('resultBadge').textContent = platformNames[state.platform] || '📱';
+
+  // Separate hashtags visually
+  const hashIndex = text.indexOf('#');
+  if(hashIndex > 0){
+    const main = text.substring(0, hashIndex).trim();
+    const hashes = text.substring(hashIndex).trim();
+    content.innerHTML = main + '\n\n<span class="hashtags">' + hashes + '</span>';
+  } else {
+    content.textContent = text;
+  }
+
+  sec.classList.add('show');
+  sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+async function copyResult(){
+  const content = document.getElementById('resultContent');
+  const text = content.textContent || content.innerText;
+  try {
+    await navigator.clipboard.writeText(text);
+    const btn = document.querySelector('.action-btn.primary');
+    btn.textContent = '✅ کپی شد!';
+    btn.classList.add('copy-done');
+    setTimeout(()=>{ btn.textContent = '📋 کپی کامل'; btn.classList.remove('copy-done'); }, 2000);
+  } catch {
+    const ta = document.createElement('textarea');
+    ta.value = text; ta.style.position='fixed'; ta.style.opacity='0';
+    document.body.appendChild(ta); ta.select(); document.execCommand('copy');
+    document.body.removeChild(ta);
+    alert('✅ متن کپی شد!');
+  }
+}
+
+function clearAll(){
+  document.getElementById('userText').value = '';
+  document.getElementById('charCount').textContent = '۰ / ۲۰۰۰';
+  document.getElementById('resultSection').classList.remove('show');
+  document.getElementById('smartTip').classList.remove('show');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function showTips(){
+  alert('💡 نکات تولید محتوا:\n\n🎂 برای آموزش کیک: نوع "آموزش/دستور" رو انتخاب کن\n📱 بله: طول متوسط بهترینه\n📸 استوری: کوتاه و ضربه‌ای\n🔥 انگیزشی + CTA = تعامل بیشتر\n#️⃣ ۵ تا ۸ هشتگ برای بله ایده‌آله');
+}
+
+function showHistory(){
+  if(!state.history.length){ alert('تاریخچه‌ای ندارید. اولین محتوا رو بسازید! ✨'); return; }
+  const last = state.history[0];
+  alert('آخرین محتوای ساخته شده:\n\n' + last.text.substring(0,200) + '...');
+}
+
+function showProfile(){
+  alert('👤 پروفایل شما:\n\n🌸 خانم متاهل ۴۴ ساله\n👨‍👩‍👧‍👦 ۳ فرزند\n🎂 کیک‌پز حرفه‌ای\n📅 پیج اینستاگرام از ۲۰۲۰\n📱 تمرکز اصلی: کانال بله');
+}
+</script>
+</body>
+</html>
